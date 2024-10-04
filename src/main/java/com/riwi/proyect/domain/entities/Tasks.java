@@ -22,7 +22,7 @@ public class Tasks extends Auditable{
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 }
