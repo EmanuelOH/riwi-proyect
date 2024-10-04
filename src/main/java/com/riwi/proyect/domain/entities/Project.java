@@ -2,6 +2,10 @@ package com.riwi.proyect.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 @Entity
 @Getter
@@ -10,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "projects")
-public class Project {
+public class Project extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

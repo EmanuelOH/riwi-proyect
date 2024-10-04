@@ -4,6 +4,7 @@ import com.riwi.proyect.domain.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "users")
-public class Users implements UserDetails {
+public class Users extends Auditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -15,7 +15,4 @@ public class ProjectRequestDto {
 
     @NotBlank(message = "description required!")
     private String description;
-
-    @NotBlank(message = "user required!")
-    private Users users;
 }
