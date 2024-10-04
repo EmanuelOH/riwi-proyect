@@ -20,6 +20,6 @@ public abstract class Auditable {
     private String createdBy;
 
     @UpdateTimestamp
-    @Column(name = "updated_by", nullable = false)
+    @Column(name = "updated_by")
     private String updatedBy;
 }
