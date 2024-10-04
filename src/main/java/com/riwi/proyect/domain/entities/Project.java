@@ -40,4 +40,12 @@ public class Project extends Auditable {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "task_id", nullable = false)
     private List<Tasks> tasks;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private String createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_by")
+    private String updateAt;
 }
