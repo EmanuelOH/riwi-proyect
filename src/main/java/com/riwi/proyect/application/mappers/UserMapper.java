@@ -3,19 +3,14 @@ package com.riwi.proyect.application.mappers;
 import com.riwi.proyect.application.dtos.requests.UserRequestDto;
 import com.riwi.proyect.application.dtos.responses.UserResponseDto;
 import com.riwi.proyect.domain.entities.Users;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public class UserMapper {
+@Mapper
+public interface UserMapper {
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    //
-    public Users toEntity(UserRequestDto requestDto){
-        return Users.builder()
-                .username(requestDto.getUsername())
-                .email(requestDto.getEmail())
-                .build();
-    }
+    Users toEntity (UserRequestDto requestDto);
+    UserResponseDto toResponseDto (Users user);
 
-    public UserResponseDto toResponse (Users user){
-        return UserResponseDto.builder()
-                .build();
-    }
 }
