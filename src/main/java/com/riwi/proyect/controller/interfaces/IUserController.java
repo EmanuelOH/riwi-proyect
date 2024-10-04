@@ -12,8 +12,7 @@ public interface IUserController extends
         ReadAllController<UserResponseDto>,
         ReadByIdController<UserResponseDto, Long>,
         DeleteController<Long> {
-public ResponseEntity<AuthUserResponseDto> registerAdmin(UserRequestDto requestDto);
-public ResponseEntity<AuthUserResponseDto> registerTeacher(UserRequestDto requestDto);
+    public ResponseEntity<AuthUserResponseDto> registerAdmin(UserRequestDto requestDto);
 
-public ResponseEntity<AuthUserResponseDto> registerStudent(UserRequestDto requestDto);
+    public ResponseEntity<AuthUserResponseDto> registerRegularUser(UserRequestDto requestDto);
 }
