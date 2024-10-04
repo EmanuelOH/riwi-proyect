@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "tasks")
-public class Tasks {
+public class Tasks extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
