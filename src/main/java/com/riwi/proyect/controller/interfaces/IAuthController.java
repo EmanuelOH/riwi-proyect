@@ -1,7 +1,7 @@
 package com.riwi.proyect.controller.interfaces;
 
 import com.riwi.proyect.application.dtos.requests.AuthUserRequestDto;
-import com.riwi.proyect.application.dtos.respponses.AuthUserResponseDto;
+import com.riwi.proyect.application.dtos.responses.AuthUserResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface IAuthController {

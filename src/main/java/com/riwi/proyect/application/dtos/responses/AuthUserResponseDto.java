@@ -1,4 +1,4 @@
-package com.riwi.proyect.application.dtos.respponses;
+package com.riwi.proyect.application.dtos.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

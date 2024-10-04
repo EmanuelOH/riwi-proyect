@@ -2,6 +2,7 @@ package com.riwi.proyect.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
@@ -12,7 +13,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "projects")
 public class Project extends Auditable {
     @Id
