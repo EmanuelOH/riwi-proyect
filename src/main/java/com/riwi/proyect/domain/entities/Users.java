@@ -36,6 +36,8 @@ public class Users implements UserDetails {
     @Column(nullable = false)
     private RoleEnum role;
 
+    private Boolean enabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(this.role.name()));
@@ -58,6 +60,6 @@ public class Users implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.isEnabled();
+        return this.enabled;
     }
 }
