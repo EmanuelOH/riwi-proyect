@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -26,7 +28,16 @@ public class Project extends Auditable {
     @Column(nullable = false)
     private String description;
 
+    @CreatedBy
+    @ManyToOne
+    @JoinColumn(name = "created_by", updatable = false)
+    private Users createdBy;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Users users;
+    private Users user;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "task_id", nullable = false)
+    private List<Tasks> tasks;
 }

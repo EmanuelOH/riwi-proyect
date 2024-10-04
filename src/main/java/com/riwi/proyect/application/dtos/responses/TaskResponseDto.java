@@ -15,6 +15,4 @@ public class TaskResponseDto {
     private String name;
 
     private String description;
-
-    private Project project;
 }
