@@ -2,13 +2,14 @@ package com.riwi.proyect.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = "tasks")
 public class Tasks extends Auditable{
     @Id

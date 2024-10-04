@@ -1,7 +1,7 @@
 package com.riwi.proyect.application.service.auth;
 
 import com.riwi.proyect.application.dtos.requests.AuthUserRequestDto;
-import com.riwi.proyect.application.dtos.respponses.AuthUserResponseDto;
+import com.riwi.proyect.application.dtos.responses.AuthUserResponseDto;
 import com.riwi.proyect.domain.entities.Users;
 import com.riwi.proyect.domain.exception.InvalidCredentialException;
 import com.riwi.proyect.domain.ports.service.interfaces.IAuthService;

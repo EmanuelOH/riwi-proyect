@@ -1,7 +1,7 @@
 package com.riwi.proyect.controller.implement;
 
 import com.riwi.proyect.application.dtos.requests.AuthUserRequestDto;
-import com.riwi.proyect.application.dtos.respponses.AuthUserResponseDto;
+import com.riwi.proyect.application.dtos.responses.AuthUserResponseDto;
 import com.riwi.proyect.controller.interfaces.IAuthController;
 import com.riwi.proyect.domain.ports.service.interfaces.IAuthService;
 import io.swagger.v3.oas.annotations.Operation;
