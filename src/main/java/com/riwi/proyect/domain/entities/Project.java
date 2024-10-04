@@ -28,11 +28,6 @@ public class Project extends Auditable {
     @Column(nullable = false)
     private String description;
 
-    @CreatedBy
-    @ManyToOne
-    @JoinColumn(name = "created_by", updatable = false)
-    private Users createdBy;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
