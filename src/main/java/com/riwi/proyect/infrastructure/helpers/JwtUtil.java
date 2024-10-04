@@ -1,7 +1,9 @@
 package com.riwi.proyect.infrastructure.helpers;
 
+import com.riwi.proyect.domain.entities.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,9 +26,16 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    //Hacer el generador de token cuando haya entidad de user.
-    public String generateToken(){
+    public String generateToken(Users user){
         return Jwts.builder()
+                .addClaims(Map.of(
+                        "id", user.getId(),
+                        "role", user.getRole()
+                ))
+                .setSubject(user.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 

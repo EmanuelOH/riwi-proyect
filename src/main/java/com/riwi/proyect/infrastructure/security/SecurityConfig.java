@@ -1,5 +1,6 @@
 package com.riwi.proyect.infrastructure.security;
 
+import com.riwi.proyect.domain.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +40,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers(ADMIN_ENDPOINT).hasAuthority() //Agregar el rol de admin cuando este el enum
+                        .requestMatchers(ADMIN_ENDPOINT).hasAuthority(RoleEnum.ADMIN.name())
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                         .anyRequest().authenticated()
                 )
