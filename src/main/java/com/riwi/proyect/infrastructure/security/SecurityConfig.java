@@ -22,21 +22,17 @@ public class SecurityConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
 
-    //Rutas publicas
-    private final String [] PUBLIC_ENDPOINT = {
+    private final String[] PUBLIC_ENDPOINT = {
             "/auth/login",
-            "/users/register/admin",
+            "/users/register/user",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/skills/create"
+            "/users/register/admin"
     };
 
-    //Rutas privadas
-    private final String [] ADMIN_ENDPOINT = {
-            "/users/**",
-            "/users/register/admin",
-            "/users/register/teacher",
-            "/missions/**"
+    private final String[] ADMIN_ENDPOINT = {
+            "/users/delete/**",
+            "/users/readAll/**"
     };
 
     //Configuracion del SecurityFilterChain

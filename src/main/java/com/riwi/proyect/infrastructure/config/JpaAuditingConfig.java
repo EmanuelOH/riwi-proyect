@@ -12,6 +12,6 @@ import java.util.Optional;
 public class JpaAuditingConfig {
     @Bean
     public AuditorAware<String> auditorProvider() {
-        return () -> Optional.of("defaultAuditor"); // Puedes cambiar esto para obtener el usuario actual
+        return new AuditorAwareImpl();
     }
 }

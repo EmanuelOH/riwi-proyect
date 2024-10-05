@@ -26,7 +26,7 @@ import java.util.List;
 public class UserControllerImpl implements IUserController {
 
     @Autowired
-    private final IUserService userService;
+    private IUserService userService;
 
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
@@ -78,7 +78,7 @@ public class UserControllerImpl implements IUserController {
     @PostMapping("/register/admin")
     @Operation(
             summary = "Create an admin.",
-            description = "Provides the user data to create it and token to validated the permissions."
+            description = "Provides the user data to create it and token to validate the permissions."
     )
     @Override
     public ResponseEntity<AuthUserResponseDto> registerAdmin(@Validated @RequestBody UserRequestDto requestDto) {

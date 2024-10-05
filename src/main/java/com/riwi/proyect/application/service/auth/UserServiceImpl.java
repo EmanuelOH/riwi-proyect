@@ -69,12 +69,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public AuthUserResponseDto register(UserRequestDto request, RoleEnum role) {
-        Users userDB = userRepository.findByUsernameOrEmail(request.getUsername(), request.getEmail());
+        //Verifica si el usuario existe
+        Users userDB = userRepository.findByUsernameOrEmail(request.getEmail(), request.getUsername());
 
-        if (userDB != null) {
-            throw new InvalidCredentialException("Registered user!");
+        //Verifica si el usuario ya existe
+        if(userDB != null){
+            throw new InvalidCredentialException("Username register"); //Exception si el usuario ya existe
         }
 
+        System.out.println("Paso");
+
+        //Crea un nueco usuario
         Users user = Users.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -83,15 +88,20 @@ public class UserServiceImpl implements IUserService {
                 .enabled(true)
                 .build();
 
+
+        //Guarda el usuario creado en la base de datos
         user = this.userRepository.save(user);
 
+        System.out.println("Paso y guardo");
+
+        //Genera la respuesta de registro e el token JWT
         return AuthUserResponseDto.builder()
-                .message(user.getRole() + " successfully authenticated!")
+                .message(user.getRole() + " successfully authenticated")
                 .token(this.jwtUtil.generateToken(user))
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .role(role)
                 .build();
     }
 }

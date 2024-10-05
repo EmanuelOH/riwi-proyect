@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,14 +26,14 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenApi() {
-        return new OpenAPI() // Crea una nueva instancia de OpenAPI
-                .components( // Define los componentes de la especificación OpenAPI
-                        new Components().addSecuritySchemes("bearerAuth", // Agrega un esquema de seguridad llamado "bearerAuth"
-                                new SecurityScheme() // Crea un nuevo esquema de seguridad
-                                        .type(SecurityScheme.Type.HTTP) // Define el tipo de esquema de seguridad como HTTP
-                                        .scheme("bearer") // Especifica que el esquema de autenticación es de tipo "bearer"
-                                        .bearerFormat("JWT") // Indica que el formato del token es JWT (JSON Web Token)
-                                        .name("Authorization"))); // Establece el nombre del encabezado para pasar el token de autorización
+        return new OpenAPI()
+                .components(new Components().addSecuritySchemes("bearerAuth",
+                        new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")
+                                .name("Authorization")))
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
     }
 
 }
