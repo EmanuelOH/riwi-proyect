@@ -22,21 +22,26 @@ public class SecurityConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
 
+    //Rutas publicas
     private final String [] PUBLIC_ENDPOINT = {
             "/auth/login",
-            "/users/register/student",
+            "/users/register/admin",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/skills/create"
     };
 
+    //Rutas privadas
     private final String [] ADMIN_ENDPOINT = {
-            "/user/admin/register",
-            "/project/**",
-            "/task/**"
+            "/users/**",
+            "/users/register/admin",
+            "/users/register/teacher",
+            "/missions/**"
     };
 
+    //Configuracion del SecurityFilterChain
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth

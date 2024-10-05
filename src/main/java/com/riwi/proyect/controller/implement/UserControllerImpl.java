@@ -29,7 +29,7 @@ public class UserControllerImpl implements IUserController {
     private final IUserService userService;
 
     @SecurityRequirement(name = "bearerAuth")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete a user.",
             description = "Delete a user by their ID, requiring authentication."
@@ -41,7 +41,7 @@ public class UserControllerImpl implements IUserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("readAll")
+    @GetMapping("/readAll")
     @Operation(
             summary = "List all users.",
             description = "Provide the token to validate the permissions and obtain the list of users."
@@ -52,7 +52,7 @@ public class UserControllerImpl implements IUserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Get user by ID.",
             description = "Retrieve a user's details by their ID, with proper authentication."
@@ -63,7 +63,7 @@ public class UserControllerImpl implements IUserController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @Operation(
             summary = "Update user by ID.",
             description = "Update a user's details by their ID, requiring authentication."
@@ -74,8 +74,8 @@ public class UserControllerImpl implements IUserController {
         return ResponseEntity.ok(this.userService.update(requestDto, id));
     }
 
-    @SecurityRequirement(name = "bearerAuth")
-    @PostMapping("register/admin")
+    //@SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/register/admin")
     @Operation(
             summary = "Create an admin.",
             description = "Provides the user data to create it and token to validated the permissions."
@@ -85,8 +85,8 @@ public class UserControllerImpl implements IUserController {
         return ResponseEntity.ok(this.userService.register(requestDto, RoleEnum.ADMIN));
     }
 
-    @SecurityRequirement(name = "bearerAuth")
-    @PostMapping("register/user ")
+    //@SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/register/user")
     @Operation(
             summary = "Create an regular user.",
             description = "Provides the user data to create it and token to validated the permissions."

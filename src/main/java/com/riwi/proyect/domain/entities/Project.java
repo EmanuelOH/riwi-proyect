@@ -8,15 +8,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
-@Entity
+@Entity(name = "projects")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "projects")
 public class Project extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,15 +33,21 @@ public class Project extends Auditable {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "task_id", nullable = false)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Tasks> tasks;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "project_users",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<Users> users;
+
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private String createdAt;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_by")
-    private String updateAt;
+    private LocalDateTime updatedAt;
 }

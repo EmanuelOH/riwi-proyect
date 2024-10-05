@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("project")
+@RequestMapping("projects")
 @AllArgsConstructor
 @Tag(name = "project", description = "Manages project-related requests.")
 @CrossOrigin("*")

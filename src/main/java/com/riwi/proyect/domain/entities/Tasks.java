@@ -6,13 +6,14 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
+import java.time.LocalDateTime;
+
+@Entity(name = "tasks")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "tasks")
 public class Tasks extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +30,9 @@ public class Tasks extends Auditable{
     private Project project;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private String createdAt;
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_by")
-    private String updateAt;
+    private LocalDateTime updatedAt;
 }
