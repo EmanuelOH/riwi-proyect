@@ -8,10 +8,8 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
-public class AuthUserResponseDto {
+public class AuthUserResponseDto extends UserResponseDto {
     private String message;
     private String token;
 }
