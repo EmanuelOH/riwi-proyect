@@ -15,4 +15,8 @@ public class TaskResponseDto {
     private String name;
 
     private String description;
+
+    private String createdAt;
+
+    private String updateAt;
 }

@@ -10,6 +10,8 @@ import lombok.experimental.StandardException;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 @Getter
 @Setter
@@ -17,11 +19,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor
 @SuperBuilder
 public abstract class Auditable {
-    @CreationTimestamp
+    @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
     private String createdBy;
 
-    @UpdateTimestamp
+    @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
 }
