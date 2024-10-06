@@ -21,17 +21,13 @@ import java.util.Set;
 public class Project extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Users user;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Tasks> tasks;

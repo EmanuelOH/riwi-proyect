@@ -26,7 +26,7 @@ import java.util.List;
 public class UserControllerImpl implements IUserController {
 
     @Autowired
-    private IUserService userService;
+    private final IUserService userService;
 
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
@@ -69,13 +69,13 @@ public class UserControllerImpl implements IUserController {
             description = "Update a user's details by their ID, requiring authentication."
     )
     @Override
-    public ResponseEntity<Users> update(@Validated @PathVariable UserRequestDto requestDto,
+    public ResponseEntity<Users> update(@Validated @RequestBody UserRequestDto requestDto,
                                         @PathVariable Long id) {
         return ResponseEntity.ok(this.userService.update(requestDto, id));
     }
 
-    //@SecurityRequirement(name = "bearerAuth")
-    @PostMapping("/register/admin")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("register/admin")
     @Operation(
             summary = "Create an admin.",
             description = "Provides the user data to create it and token to validate the permissions."
@@ -85,8 +85,8 @@ public class UserControllerImpl implements IUserController {
         return ResponseEntity.ok(this.userService.register(requestDto, RoleEnum.ADMIN));
     }
 
-    //@SecurityRequirement(name = "bearerAuth")
-    @PostMapping("/register/user")
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("register/user")
     @Operation(
             summary = "Create an regular user.",
             description = "Provides the user data to create it and token to validated the permissions."

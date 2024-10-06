@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
@@ -23,26 +26,29 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private final String[] PUBLIC_ENDPOINT = {
+
             "/auth/login",
-            "/users/register/user",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/users/register/admin"
     };
 
     private final String[] ADMIN_ENDPOINT = {
+            "/users/readAll",
+            "/users/{id}",
+            "/users/register/admin",
+            "/users/register/user",
             "/users/delete/**",
-            "/users/readAll/**"
+
+            "/projects/**",
+            "/task/**"
     };
 
-    //Configuracion del SecurityFilterChain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(ADMIN_ENDPOINT).hasAuthority(RoleEnum.ADMIN.name())
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(ADMIN_ENDPOINT).hasAuthority(RoleEnum.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)

@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,16 +71,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public AuthUserResponseDto register(UserRequestDto request, RoleEnum role) {
         //Verifica si el usuario existe
-        Users userDB = userRepository.findByUsernameOrEmail(request.getEmail(), request.getUsername());
+        Users userDB = userRepository.findByUsernameOrEmail(request.getUsername(),request.getEmail());
 
         //Verifica si el usuario ya existe
         if(userDB != null){
-            throw new InvalidCredentialException("Username register"); //Exception si el usuario ya existe
+            throw new InvalidCredentialException("Username register");
         }
 
-        System.out.println("Paso");
-
-        //Crea un nueco usuario
         Users user = Users.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -89,19 +87,18 @@ public class UserServiceImpl implements IUserService {
                 .build();
 
 
-        //Guarda el usuario creado en la base de datos
         user = this.userRepository.save(user);
-
-        System.out.println("Paso y guardo");
 
         //Genera la respuesta de registro e el token JWT
         return AuthUserResponseDto.builder()
                 .message(user.getRole() + " successfully authenticated")
-                .token(this.jwtUtil.generateToken(user))
+                //.token(this.jwtUtil.generateToken(user))
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .role(role)
+                .role(user.getRole().name())
+                .createdBy(user.getCreatedBy())
+                .updatedBy(user.getUpdatedBy())
                 .build();
     }
 }

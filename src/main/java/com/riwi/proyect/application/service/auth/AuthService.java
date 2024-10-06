@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -30,19 +31,24 @@ public class AuthService implements IAuthService {
     private final AuthenticationManager authenticationManager;
 
 
+    @Transactional
     @Override
-    public AuthUserResponseDto login(AuthUserRequestDto requestDto) {
-        Users user = (Users) userDetailsService.loadUserByUsername(requestDto.getIdentifier());
+    public AuthUserResponseDto login(AuthUserRequestDto request) {
+        Users user = (Users) userDetailsService.loadUserByUsername(request.getIdentifier());
 
-        if(!passwordEncoder.matches(requestDto.getIdentifier(), requestDto.getPassword())){
-            throw new InvalidCredentialException("Invalid credential");
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+            throw  new InvalidCredentialException("Invalid credential");
         }
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getIdentifier(), requestDto.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getIdentifier(), request.getPassword()));
 
         return AuthUserResponseDto.builder()
-                .message(user.getRole() + " Successfully authentication")
-                .token(jwtUtil.generateToken(user))
+                .message(user.getRole() + "Succesfull authentication")
+                .token(this.jwtUtil.generateToken(user))
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole().name())
                 .build();
     }
 }

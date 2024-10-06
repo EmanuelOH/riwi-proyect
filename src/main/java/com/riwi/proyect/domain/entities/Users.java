@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Entity(name = "users")
 @Getter
@@ -20,12 +21,12 @@ import java.util.Collections;
 public class Users extends Auditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(length = 100, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
@@ -35,16 +36,15 @@ public class Users extends Auditable implements UserDetails {
     @Column(nullable = false)
     private RoleEnum role;
 
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private Set<Project> projects;
+
+    @Column(nullable = false)
     private Boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(this.role.name()));
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
     }
 
     @Override

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class ProjectResponseDto {
 
     private String description;
 
-    private Users users;
+    private Set<Users> users;
 
     private List<TaskResponseDto> tasks;
 

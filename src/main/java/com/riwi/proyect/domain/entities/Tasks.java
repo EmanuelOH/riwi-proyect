@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Tasks extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;

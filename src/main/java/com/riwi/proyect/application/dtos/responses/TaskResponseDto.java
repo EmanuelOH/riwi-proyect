@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class TaskResponseDto {
-    private Integer id;
+    private Long id;
 
     private String name;
 

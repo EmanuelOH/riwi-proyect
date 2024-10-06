@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 ),
         servers = {
                 //@Server(url = "https://api.herotraining.com/v1", description = "Server of production"),
-                @Server(url = "http://localhost:8080/api/v1", description = "Server local")
+                @Server(url = "http://localhost:8080", description = "Server local")
         }
 )
 public class OpenApiConfig {
@@ -33,7 +33,7 @@ public class OpenApiConfig {
                                 .scheme("bearer")
                                 .bearerFormat("JWT")
                                 .name("Authorization")))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+                ;
     }
 
 }
