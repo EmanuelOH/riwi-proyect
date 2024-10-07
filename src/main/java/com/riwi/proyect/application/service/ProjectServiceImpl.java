@@ -14,6 +14,8 @@ import com.riwi.proyect.infrastructure.persistence.ProjectRepository;
 import com.riwi.proyect.infrastructure.persistence.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +42,9 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Autowired
     private  JwtUtil jwtUtil;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @Override
     public Project create(ProjectRequestDto requestDto) {
@@ -126,6 +131,11 @@ public class ProjectServiceImpl implements IProjectService {
                 ).collect(Collectors.toSet());
 
         project.getUsers().addAll(users);
+
+        users.stream()
+                .map(Users::getEmail)
+                .forEach(email -> sendAssignProjectMessageEmail(project, email));
+
         return projectRepository.save(project);
     }
 
@@ -146,5 +156,17 @@ public class ProjectServiceImpl implements IProjectService {
         return projectList.stream()
                 .map(ProjectMapper.INSTANCE::toResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    private void sendAssignProjectMessageEmail(Project project, String userEmail){
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(userEmail);
+        message.setSubject("Nuevo proyecto creado: " + project.getName());
+        message.setText("Hola,\n\nSe ha creado un nuevo proyecto llamado: " + project.getName() +
+                "\n\nDetalles del proyecto:\n" + "ID: " + project.getId() +
+                "\n\nSaludos,\nTu equipo de soporte.");
+
+        emailSender.send(message);
     }
 }
