@@ -26,21 +26,21 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private final String[] PUBLIC_ENDPOINT = {
-
             "/auth/login",
             "/swagger-ui/**",
             "/v3/api-docs/**",
     };
 
     private final String[] ADMIN_ENDPOINT = {
-            "/users/readAll",
-            "/users/{id}",
-            "/users/register/admin",
-            "/users/register/user",
-            "/users/delete/**",
+            "/users/**",
+            "/task/**",
+            "/projects",
+            "/projects/{id}",
+            "/projects/{projectId}/assign-users"
+    };
 
-            "/projects/**",
-            "/task/**"
+    public final String[] REGULAR_USER_ENDPOINTS = {
+            "/projects/getProject"
     };
 
     @Bean
@@ -48,6 +48,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(REGULAR_USER_ENDPOINTS).hasAuthority(RoleEnum.REGULAR_USER.name())
                         .requestMatchers(ADMIN_ENDPOINT).hasAuthority(RoleEnum.ADMIN.name())
                         .anyRequest().authenticated()
                 )

@@ -1,5 +1,6 @@
 package com.riwi.proyect.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.riwi.proyect.domain.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "users")
@@ -37,6 +39,7 @@ public class Users extends Auditable implements UserDetails {
     private RoleEnum role;
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Project> projects;
 
     @Column(nullable = false)

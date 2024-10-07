@@ -10,5 +10,5 @@ public interface ITaskController extends
         ReadAllController<TaskResponseDto>,
         ReadByIdController<TaskResponseDto, Long>,
         UpdateController<TaskRequestDto, Tasks, Long>,
-        DeleteController<Long> {
+        DeleteController<Long>{
 }

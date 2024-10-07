@@ -45,7 +45,7 @@ public class TaskControllerImpl implements ITaskController {
             description = "Deletes a project with the specified ID."
     )
     @Override
-    public ResponseEntity<Void> delete(Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -68,7 +68,7 @@ public class TaskControllerImpl implements ITaskController {
             description = "Returns a task with the specified ID."
     )
     @Override
-    public ResponseEntity<TaskResponseDto> readById(Long id) {
+    public ResponseEntity<TaskResponseDto> readById(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.readById(id));
     }
 

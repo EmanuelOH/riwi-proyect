@@ -43,6 +43,10 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public Long extractUserId(String token){
+        return Long.parseLong(extractClaim(token, Claims::getSubject));
+    }
+
     public boolean validateToken(String token, String username){
         return (username.equals(extractUsername(token)) && !isTokenExpired(token));
     }

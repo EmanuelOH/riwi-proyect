@@ -74,7 +74,7 @@ public class UserControllerImpl implements IUserController {
         return ResponseEntity.ok(this.userService.update(requestDto, id));
     }
 
-    @SecurityRequirement(name = "bearerAuth")
+    //@SecurityRequirement(name = "bearerAuth")
     @PostMapping("register/admin")
     @Operation(
             summary = "Create an admin.",

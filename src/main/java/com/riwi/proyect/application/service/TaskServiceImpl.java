@@ -3,9 +3,13 @@ package com.riwi.proyect.application.service;
 import com.riwi.proyect.application.dtos.requests.TaskRequestDto;
 import com.riwi.proyect.application.dtos.responses.TaskResponseDto;
 import com.riwi.proyect.application.mappers.TaskMapper;
+import com.riwi.proyect.domain.entities.Project;
 import com.riwi.proyect.domain.entities.Tasks;
+import com.riwi.proyect.domain.entities.Users;
 import com.riwi.proyect.domain.ports.service.interfaces.ITaskService;
+import com.riwi.proyect.infrastructure.persistence.ProjectRepository;
 import com.riwi.proyect.infrastructure.persistence.TaskRepository;
+import com.riwi.proyect.infrastructure.persistence.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +23,19 @@ public class TaskServiceImpl implements ITaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
     @Override
     public Tasks create(TaskRequestDto taskRequestDto) {
-        return this.taskRepository.save(TaskMapper.INSTANCE.toEntity(taskRequestDto));
+        Project project = projectRepository.findById(taskRequestDto.getProject_id())
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+
+        Tasks task = TaskMapper.INSTANCE.toEntity(taskRequestDto);
+
+        task.setProject(project);
+
+        return this.taskRepository.save(task);
     }
 
     @Override

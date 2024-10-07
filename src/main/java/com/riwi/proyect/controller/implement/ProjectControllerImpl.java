@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -81,5 +82,32 @@ public class ProjectControllerImpl implements IProjectController {
     @Override
     public ResponseEntity<Project> update(@Validated @RequestBody ProjectRequestDto requestDto, @PathVariable Long id) {
         return ResponseEntity.ok(projectService.update(requestDto, id));
+    }
+
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/{projectId}/assign-users")
+    @Operation(
+            summary = "Assign an user to a project",
+            description = "Assign an user to a project with the specified ID."
+    )
+    @Override
+    public ResponseEntity<Project> assignUser(@PathVariable Long projectId,
+            @RequestBody List<Long> userIds) {
+
+        Project updatedProject = projectService.assignUser(projectId, userIds);
+
+        return ResponseEntity.ok(updatedProject);
+    }
+
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("getProject")
+    @Operation(
+            summary = "Get all project",
+            description = "Returns a list of all project."
+    )
+    @Override
+    public ResponseEntity<List<ProjectResponseDto>> getProject() {
+        List<ProjectResponseDto> response = projectService.getProject();
+        return ResponseEntity.ok(response);
     }
 }
